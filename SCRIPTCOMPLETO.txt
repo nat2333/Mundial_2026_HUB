@@ -1,0 +1,171 @@
+-- =============================================
+-- SPRINT 3 — Notificaciones Multicanal
+-- =============================================
+
+CREATE TABLE notificacion (
+    id              BIGSERIAL PRIMARY KEY,
+    id_usuario      BIGINT REFERENCES usuario(id) ON DELETE CASCADE,
+    id_partido      BIGINT REFERENCES partido(id) ON DELETE CASCADE,
+    tipo            VARCHAR(50),
+    canal           VARCHAR(20),
+    mensaje         VARCHAR(500),
+    fecha_envio     TIMESTAMP DEFAULT NOW(),
+    estado_envio    VARCHAR(20) DEFAULT 'ENVIADA',
+    id_correlacion  VARCHAR(100)
+);
+
+CREATE TABLE suscripcion_notificacion (
+    id              BIGSERIAL PRIMARY KEY,
+    id_usuario      BIGINT NOT NULL REFERENCES usuario(id) ON DELETE CASCADE,
+    tipo_evento     VARCHAR(50) NOT NULL,
+    canal           VARCHAR(20) NOT NULL,
+    activo          SMALLINT DEFAULT 1,
+    fecha_creacion  TIMESTAMP DEFAULT NOW()
+);
+
+-- =============================================
+-- SPRINT 4 — Pollas Futboleras
+-- =============================================
+
+CREATE TABLE polla (
+    id                  BIGSERIAL PRIMARY KEY,
+    nombre              VARCHAR(150) NOT NULL,
+    id_creador          BIGINT NOT NULL REFERENCES usuario(id) ON DELETE CASCADE,
+    codigo_invitacion   VARCHAR(30) UNIQUE,
+    estado              VARCHAR(20) DEFAULT 'ACTIVA',
+    fecha_creacion      TIMESTAMP DEFAULT NOW(),
+    descripcion         VARCHAR(300)
+);
+
+CREATE TABLE miembro_polla (
+    id                  BIGSERIAL PRIMARY KEY,
+    id_polla            BIGINT NOT NULL REFERENCES polla(id) ON DELETE CASCADE,
+    id_usuario          BIGINT NOT NULL REFERENCES usuario(id) ON DELETE CASCADE,
+    puntaje_total       INT DEFAULT 0,
+    posicion_ranking    INT,
+    fecha_union         TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE pronostico (
+    id                          BIGSERIAL PRIMARY KEY,
+    id_polla                    BIGINT NOT NULL REFERENCES polla(id) ON DELETE CASCADE,
+    id_usuario                  BIGINT NOT NULL REFERENCES usuario(id) ON DELETE CASCADE,
+    id_partido                  BIGINT NOT NULL REFERENCES partido(id) ON DELETE CASCADE,
+    resultado_predicho          VARCHAR(20),
+    goles_local_predichos       INT,
+    goles_visitante_predichos   INT,
+    puntaje_obtenido            INT DEFAULT 0,
+    fecha_registro              TIMESTAMP DEFAULT NOW(),
+    cerrado                     SMALLINT DEFAULT 0
+);
+
+-- =============================================
+-- SPRINT 5 — Álbum Digital
+-- =============================================
+
+CREATE TABLE lamina (
+    id              BIGSERIAL PRIMARY KEY,
+    nombre          VARCHAR(150) NOT NULL,
+    categoria       VARCHAR(50),
+    seleccion       VARCHAR(80),
+    rareza          VARCHAR(30) DEFAULT 'COMUN',
+    descripcion     VARCHAR(300),
+    imagen_url      VARCHAR(300),
+    numero_album    INT
+);
+
+CREATE TABLE lamina_usuario (
+    id              BIGSERIAL PRIMARY KEY,
+    id_usuario      BIGINT NOT NULL REFERENCES usuario(id) ON DELETE CASCADE,
+    id_lamina       BIGINT NOT NULL REFERENCES lamina(id) ON DELETE CASCADE,
+    cantidad        INT DEFAULT 1,
+    en_intercambio  SMALLINT DEFAULT 0,
+    fecha_obtencion TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE intercambio_lamina (
+    id                  BIGSERIAL PRIMARY KEY,
+    id_usuario_oferta   BIGINT NOT NULL REFERENCES usuario(id) ON DELETE CASCADE,
+    id_usuario_receptor BIGINT NOT NULL REFERENCES usuario(id) ON DELETE CASCADE,
+    id_lamina_oferta    BIGINT NOT NULL REFERENCES lamina(id),
+    id_lamina_receptor  BIGINT NOT NULL REFERENCES lamina(id),
+    estado              VARCHAR(20) DEFAULT 'PENDIENTE',
+    fecha_solicitud     TIMESTAMP DEFAULT NOW(),
+    fecha_resolucion    TIMESTAMP,
+    id_correlacion      VARCHAR(100)
+);
+
+CREATE TABLE paquete_laminas (
+    id              BIGSERIAL PRIMARY KEY,
+    id_usuario      BIGINT NOT NULL REFERENCES usuario(id) ON DELETE CASCADE,
+    tipo_origen     VARCHAR(50),
+    codigo_promo    VARCHAR(50),
+    fecha_apertura  TIMESTAMP DEFAULT NOW(),
+    abierto         SMALLINT DEFAULT 0
+);
+-- =============================================
+-- SPRINT 6 — Entradas y Pagos
+-- =============================================
+
+CREATE TABLE entrada (
+    id                          BIGSERIAL PRIMARY KEY,
+    id_partido                  BIGINT NOT NULL REFERENCES partido(id) ON DELETE CASCADE,
+    id_titular                  BIGINT REFERENCES usuario(id) ON DELETE SET NULL,
+    estado                      VARCHAR(30) DEFAULT 'DISPONIBLE',
+    precio                      NUMERIC(10,2),
+    tribuna                     VARCHAR(80),
+    fecha_reserva               TIMESTAMP,
+    fecha_expiracion_reserva    TIMESTAMP,
+    fecha_pago                  TIMESTAMP,
+    id_correlacion              VARCHAR(100),
+    id_transaccion_pago         VARCHAR(150)
+);
+
+CREATE TABLE transferencia_entrada (
+    id                  BIGSERIAL PRIMARY KEY,
+    id_entrada          BIGINT NOT NULL REFERENCES entrada(id) ON DELETE CASCADE,
+    id_usuario_origen   BIGINT NOT NULL REFERENCES usuario(id),
+    id_usuario_destino  BIGINT NOT NULL REFERENCES usuario(id),
+    fecha_transferencia TIMESTAMP DEFAULT NOW(),
+    id_correlacion      VARCHAR(100),
+    estado              VARCHAR(20) DEFAULT 'COMPLETADA'
+);
+
+CREATE TABLE reembolso_entrada (
+    id                      BIGSERIAL PRIMARY KEY,
+    id_entrada              BIGINT NOT NULL REFERENCES entrada(id) ON DELETE CASCADE,
+    id_usuario              BIGINT NOT NULL REFERENCES usuario(id),
+    motivo                  VARCHAR(300),
+    fecha_solicitud         TIMESTAMP DEFAULT NOW(),
+    fecha_resolucion        TIMESTAMP,
+    estado                  VARCHAR(20) DEFAULT 'PENDIENTE',
+    id_correlacion          VARCHAR(100),
+    id_transaccion_reembolso VARCHAR(150)
+);
+-- =============================================
+-- SPRINT 7 — Backoffice y Compliance
+-- =============================================
+
+CREATE TABLE caso_soporte (
+    id              BIGSERIAL PRIMARY KEY,
+    id_usuario      BIGINT REFERENCES usuario(id) ON DELETE SET NULL,
+    id_agente       BIGINT REFERENCES usuario(id) ON DELETE SET NULL,
+    tipo_caso       VARCHAR(60),
+    descripcion     VARCHAR(1000),
+    estado          VARCHAR(20) DEFAULT 'ABIERTO',
+    fecha_apertura  TIMESTAMP DEFAULT NOW(),
+    fecha_cierre    TIMESTAMP,
+    id_correlacion  VARCHAR(100)
+);
+
+CREATE TABLE discrepancia_datos (
+    id                  BIGSERIAL PRIMARY KEY,
+    id_partido          BIGINT REFERENCES partido(id) ON DELETE CASCADE,
+    fuente_principal    VARCHAR(100),
+    fuente_secundaria   VARCHAR(100),
+    campo_discrepancia  VARCHAR(100),
+    valor_principal     VARCHAR(200),
+    valor_secundario    VARCHAR(200),
+    fecha_deteccion     TIMESTAMP DEFAULT NOW(),
+    resuelto            SMALLINT DEFAULT 0
+);
