@@ -1,7 +1,13 @@
 package co.edu.unbosque.entity;
 
 import java.io.Serializable;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "preferencia_usuario")
@@ -30,51 +36,51 @@ public class PreferenciaUsuario implements Serializable {
 
     public PreferenciaUsuario() {}
 
-    public Long getId() { 
-    	return id; 
+    public Long getId() {
+    	return id;
     }
-    
-    public void setId(Long id) { 
-    	this.id = id; 
+
+    public void setId(Long id) {
+    	this.id = id;
     }
-    
-    public Long getIdUsuario() { 
-    	return idUsuario; 
+
+    public Long getIdUsuario() {
+    	return idUsuario;
     }
-    
-    public void setIdUsuario(Long idUsuario) { 
-    	this.idUsuario = idUsuario; 
+
+    public void setIdUsuario(Long idUsuario) {
+    	this.idUsuario = idUsuario;
     }
-    
-    public String getSeleccionesFavoritas() { 
-    	return seleccionesFavoritas; 
+
+    public String getSeleccionesFavoritas() {
+    	return seleccionesFavoritas;
     }
-    
-    public void setSeleccionesFavoritas(String seleccionesFavoritas) { 
-    	this.seleccionesFavoritas = seleccionesFavoritas; 
+
+    public void setSeleccionesFavoritas(String seleccionesFavoritas) {
+    	this.seleccionesFavoritas = seleccionesFavoritas;
     }
-    
-    public String getCiudadesInteres() { 
-    	return ciudadesInteres; 
+
+    public String getCiudadesInteres() {
+    	return ciudadesInteres;
     }
-    
-    public void setCiudadesInteres(String ciudadesInteres) { 
-    	this.ciudadesInteres = ciudadesInteres; 
+
+    public void setCiudadesInteres(String ciudadesInteres) {
+    	this.ciudadesInteres = ciudadesInteres;
     }
-    
-    public byte getNotifPush() { 
-    	return notifPush; 
+
+    public byte getNotifPush() {
+    	return notifPush;
     }
-    
-    public void setNotifPush(byte notifPush) { 
-    	this.notifPush = notifPush; 
+
+    public void setNotifPush(byte notifPush) {
+    	this.notifPush = notifPush;
     }
-    
-    public byte getNotifEmail() { 
-    	return notifEmail; 
+
+    public byte getNotifEmail() {
+    	return notifEmail;
     }
-    
-    public void setNotifEmail(byte notifEmail) { 
-    	this.notifEmail = notifEmail; 
+
+    public void setNotifEmail(byte notifEmail) {
+    	this.notifEmail = notifEmail;
     }
 }

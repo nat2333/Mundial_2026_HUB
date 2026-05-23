@@ -2,7 +2,15 @@ package co.edu.unbosque.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "usuario")
@@ -55,78 +63,78 @@ public class Usuario implements Serializable {
 
     public Usuario() {}
 
-    public Long getId() { 
-    	return id; 
-    }
-    
-    public void setId(Long id) { 
-    	this.id = id; 
-    }
-    
-    public String getCorreoUsuario() { 
-    	return correoUsuario; 
-    }
-    
-    public void setCorreoUsuario(String correoUsuario) { 
-    	this.correoUsuario = correoUsuario; 
-    }
-    
-    public String getClaveUsuario() { 
-    	return claveUsuario; 
-    }
-    
-    public void setClaveUsuario(String claveUsuario) { 
-    	this.claveUsuario = claveUsuario; 
-    }
-    
-    public String getNombres() { 
-    	return nombres; 
-    }
-    
-    public void setNombres(String nombres) { 
-    	this.nombres = nombres; 
-    }
-    
-    public String getApellidos() { 
-    	return apellidos; 
-    }
-    
-    public void setApellidos(String apellidos) { 
-    	this.apellidos = apellidos; 
+    public Long getId() {
+    	return id;
     }
 
-    public String getRol() { 
-    	return rol; 
+    public void setId(Long id) {
+    	this.id = id;
     }
-    
-    public void setRol(String rol) { 
-    	this.rol = rol; 
+
+    public String getCorreoUsuario() {
+    	return correoUsuario;
     }
-    
-    public byte getEstado() { 
-    	return estado; 
+
+    public void setCorreoUsuario(String correoUsuario) {
+    	this.correoUsuario = correoUsuario;
     }
-    
-    public void setEstado(byte estado) { 
-    	this.estado = estado; 
+
+    public String getClaveUsuario() {
+    	return claveUsuario;
     }
-    
-    public int getIntentos() { 
-    	return intentos; 
+
+    public void setClaveUsuario(String claveUsuario) {
+    	this.claveUsuario = claveUsuario;
     }
-    
-    public void setIntentos(int intentos) { 
-    	this.intentos = intentos; 
+
+    public String getNombres() {
+    	return nombres;
     }
-    
-    public Date getFechaRegistro() { 
-    	return fechaRegistro; 
+
+    public void setNombres(String nombres) {
+    	this.nombres = nombres;
     }
-    
-    public void setFechaRegistro(Date fechaRegistro) { 
-    	this.fechaRegistro = fechaRegistro; 
+
+    public String getApellidos() {
+    	return apellidos;
     }
-    
+
+    public void setApellidos(String apellidos) {
+    	this.apellidos = apellidos;
+    }
+
+    public String getRol() {
+    	return rol;
+    }
+
+    public void setRol(String rol) {
+    	this.rol = rol;
+    }
+
+    public byte getEstado() {
+    	return estado;
+    }
+
+    public void setEstado(byte estado) {
+    	this.estado = estado;
+    }
+
+    public int getIntentos() {
+    	return intentos;
+    }
+
+    public void setIntentos(int intentos) {
+    	this.intentos = intentos;
+    }
+
+    public Date getFechaRegistro() {
+    	return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+    	this.fechaRegistro = fechaRegistro;
+    }
+
     public Date getFechaUltimaClave() {
     	return fechaUltimaClave;
     }

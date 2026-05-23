@@ -1,9 +1,11 @@
 package co.edu.unbosque.service.impl;
 
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
+
 import co.edu.unbosque.entity.PreferenciaUsuario;
 import co.edu.unbosque.repository.PreferenciaUsuarioRepository;
 import co.edu.unbosque.service.api.PreferenciaUsuarioServiceAPI;

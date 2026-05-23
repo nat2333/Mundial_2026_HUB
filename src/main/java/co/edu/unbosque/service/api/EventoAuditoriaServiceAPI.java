@@ -1,6 +1,7 @@
 package co.edu.unbosque.service.api;
 
 import java.util.List;
+
 import co.edu.unbosque.entity.EventoAuditoria;
 import co.edu.unbosque.utils.GenericServiceAPI;
 

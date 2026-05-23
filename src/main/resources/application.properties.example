@@ -1,0 +1,57 @@
+spring.application.name=mundial2026hub
+
+# ──────────────────────────────────────────────────────────────────────────────
+#  application.properties — PLANTILLA (no contiene secretos)
+#
+#  COPIA este archivo a `application.properties` en la misma carpeta y rellena
+#  los valores reales. `application.properties` está en .gitignore y NUNCA debe
+#  subirse al repositorio.
+#
+#  En producción, exporta las variables de entorno y no uses defaults:
+#    export DB_PASSWORD=...
+#    export JWT_SECRET=...
+#    export SENDGRID_API_KEY=...
+#    export STRIPE_SECRET_KEY=...
+#    export STRIPE_WEBHOOK_SECRET=...
+#    export FIREBASE_CREDENTIALS_PATH=/ruta/absoluta/serviceAccount.json
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Base de datos
+spring.datasource.url=${DB_URL:jdbc:postgresql://localhost:5432/mundial2026hub}
+spring.datasource.username=${DB_USERNAME:postgres}
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+
+# Servidor
+server.port=8080
+
+# Detrás de proxy / load balancer en la nube (X-Forwarded-For)
+server.forward-headers-strategy=framework
+
+# JWT — clave de al menos 32 caracteres
+jwt.secret=${JWT_SECRET}
+jwt.expiration=${JWT_EXPIRATION:86400000}
+
+# URL del frontend
+app.frontend.url=${FRONTEND_URL:http://localhost:3000}
+
+# football-data.org
+football.api.key=${FOOTBALL_API_KEY}
+football.api.url=https://api.football-data.org/v4
+
+# SendGrid
+sendgrid.api.key=${SENDGRID_API_KEY}
+sendgrid.from.email=${SENDGRID_FROM_EMAIL:noreply@example.com}
+sendgrid.from.name=${SENDGRID_FROM_NAME:Mundial 2026 Hub}
+
+# Firebase FCM — ruta absoluta al JSON del service account
+firebase.credentials.path=${FIREBASE_CREDENTIALS_PATH}
+firebase.project.id=${FIREBASE_PROJECT_ID}
+
+# Stripe
+stripe.secret.key=${STRIPE_SECRET_KEY}
+stripe.publishable.key=${STRIPE_PUBLISHABLE_KEY}
+stripe.webhook.secret=${STRIPE_WEBHOOK_SECRET}

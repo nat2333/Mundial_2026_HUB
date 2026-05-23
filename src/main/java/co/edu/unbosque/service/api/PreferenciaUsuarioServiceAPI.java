@@ -1,6 +1,7 @@
 package co.edu.unbosque.service.api;
 
 import java.util.Optional;
+
 import co.edu.unbosque.entity.PreferenciaUsuario;
 import co.edu.unbosque.utils.GenericServiceAPI;
 

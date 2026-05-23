@@ -7,10 +7,20 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import co.edu.unbosque.dto.LoginRequest;
 import co.edu.unbosque.dto.RegistroRequest;
 import co.edu.unbosque.entity.EventoAuditoria;
@@ -18,7 +28,9 @@ import co.edu.unbosque.entity.Usuario;
 import co.edu.unbosque.service.api.EventoAuditoriaServiceAPI;
 import co.edu.unbosque.service.api.UsuarioServiceAPI;
 import co.edu.unbosque.service.impl.EmailService;
+import co.edu.unbosque.utils.JwtUtil;
 import co.edu.unbosque.utils.Utilidad;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
@@ -37,9 +49,13 @@ public class UsuarioRestController {
     @Autowired
     private EmailService emailService;
 
-    // HU-01: Registro de usuario con verificación de correo
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    //Registro de usuario con verificación de correo
     @PostMapping("/registro")
-    public ResponseEntity<?> registro(@Valid @RequestBody RegistroRequest request) {
+    public ResponseEntity<?> registro(@Valid @RequestBody RegistroRequest request,
+                                      HttpServletRequest httpRequest) {
         try {
             String correlacion = Utilidad.generarIdCorrelacion();
             logger.info("[" + correlacion + "] Iniciando registro para: " + request.getCorreoUsuario());
@@ -86,6 +102,7 @@ public class UsuarioRestController {
             evento.setDetalle("Usuario registrado (pendiente verificación): " + guardado.getCorreoUsuario());
             evento.setTimestampEvento(new Date());
             evento.setEstadoResultado("OK");
+            evento.setIpOrigen(Utilidad.obtenerIp(httpRequest));
             eventoAuditoriaServiceAPI.save(evento);
 
             logger.info("[" + correlacion + "] Registro exitoso, correo de verificación enviado: " + guardado.getCorreoUsuario());
@@ -99,9 +116,10 @@ public class UsuarioRestController {
         }
     }
 
-    // HU-01b: Verificación de correo
+    // Verificación de correo
     @GetMapping("/verificar")
-    public ResponseEntity<?> verificarCorreo(@RequestParam("token") String token) {
+    public ResponseEntity<?> verificarCorreo(@RequestParam("token") String token,
+                                             HttpServletRequest httpRequest) {
         try {
             Optional<Usuario> usuarioOpt = usuarioServiceAPI.findByTokenVerificacion(token);
 
@@ -139,6 +157,7 @@ public class UsuarioRestController {
             evento.setDetalle("Correo verificado: " + usuario.getCorreoUsuario());
             evento.setTimestampEvento(new Date());
             evento.setEstadoResultado("OK");
+            evento.setIpOrigen(Utilidad.obtenerIp(httpRequest));
             eventoAuditoriaServiceAPI.save(evento);
 
             logger.info("[" + correlacion + "] Correo verificado exitosamente: " + usuario.getCorreoUsuario());
@@ -151,9 +170,10 @@ public class UsuarioRestController {
         }
     }
 
-    // HU-02: Inicio de sesión
+    //Inicio de sesión
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request,
+                                   HttpServletRequest httpRequest) {
         String correlacion = Utilidad.generarIdCorrelacion();
         logger.info("[" + correlacion + "] Intento de login: " + request.getCorreoUsuario());
 
@@ -200,11 +220,24 @@ public class UsuarioRestController {
         evento.setDetalle("Login exitoso: " + user.getCorreoUsuario());
         evento.setTimestampEvento(new Date());
         evento.setEstadoResultado("OK");
+        evento.setIpOrigen(Utilidad.obtenerIp(httpRequest));
         eventoAuditoriaServiceAPI.save(evento);
+
+        String token = jwtUtil.generarToken(user);
+
+        // Payload seguro — nunca exponer la clave hasheada
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("id", user.getId());
+        userData.put("nombres", user.getNombres());
+        userData.put("apellidos", user.getApellidos());
+        userData.put("correoUsuario", user.getCorreoUsuario());
+        userData.put("rol", user.getRol());
+        userData.put("tienePreferencias", false);
 
         Map<String, Object> response = new HashMap<>();
         response.put("mensaje", "Login exitoso.");
-        response.put("usuario", user);
+        response.put("token", token);
+        response.put("usuario", userData);
         return ResponseEntity.ok(response);
     }
 
