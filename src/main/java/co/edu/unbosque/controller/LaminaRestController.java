@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +27,6 @@ import co.edu.unbosque.service.api.LaminaServiceAPI;
 import co.edu.unbosque.service.api.LaminaUsuarioServiceAPI;
 import co.edu.unbosque.service.api.PaqueteLaminasServiceAPI;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/lamina")
 public class LaminaRestController {

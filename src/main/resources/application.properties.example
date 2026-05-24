@@ -25,18 +25,23 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=false
 
-# Servidor
-server.port=8080
+# Servidor — Azure usa WEBSITES_PORT (8080), local usa 8080 por defecto
+server.port=${SERVER_PORT:8080}
 
-# Detrás de proxy / load balancer en la nube (X-Forwarded-For)
+# Detrás de proxy / load balancer en la nube (X-Forwarded-For, X-Forwarded-Proto)
 server.forward-headers-strategy=framework
 
 # JWT — clave de al menos 32 caracteres
 jwt.secret=${JWT_SECRET}
 jwt.expiration=${JWT_EXPIRATION:86400000}
 
-# URL del frontend
+# URL del frontend (usada en correos: links a verificar, etc.)
 app.frontend.url=${FRONTEND_URL:http://localhost:3000}
+
+# CORS — dominios autorizados a llamar el API, separados por coma
+# Local:    http://localhost:3000
+# Prod:     https://proyecto2026hub.store,https://www.proyecto2026hub.store
+app.cors.allowed-origins=${CORS_ALLOWED_ORIGINS:http://localhost:3000,https://proyecto2026hub.store,https://www.proyecto2026hub.store}
 
 # football-data.org
 football.api.key=${FOOTBALL_API_KEY}
