@@ -1355,7 +1355,7 @@ html[data-theme="dark"] .cal-phase-badge.final { color: #fde68a; background: rgb
   font-size: 11px; font-family: var(--font-mono);
   color: var(--ink-4); letter-spacing: .04em;
 }
-.mcuenta-tabs { display: flex; gap: 0; border-top: 1px solid var(--line); margin-top: 20px; }
+.mcuenta-tabs { display: flex; gap: 0; margin-top: 20px; }
 .mcuenta-tab {
   padding: 13px 20px; font-size: 13.5px; font-weight: 500;
   color: var(--ink-3); border-bottom: 2px solid transparent;
@@ -6029,44 +6029,6 @@ html[data-theme="dark"] .hero-media-img {
    el card sigue siendo legible (no rompe nada) */
 @supports not selector(:has(*)) {
   .hero-epic .hero-card { background: rgba(48,79,254,.78); }
-}
-
-/* mcuenta-hero: convertir en contenedor relativo para alojar el media */
-.mcuenta-hero {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-.mcuenta-hero .hero-media { z-index: 0; }
-.mcuenta-hero .container { position: relative; z-index: 2; }
-.mcuenta-hero--with-media {
-  background: linear-gradient(140deg, #070d3a 0%, #12196b 45%, #304ffe 100%);
-  color: #fff;
-}
-.mcuenta-hero--with-media .mcuenta-name { color: #fff; }
-.mcuenta-hero--with-media .mcuenta-email { color: rgba(255,255,255,.78); }
-.mcuenta-hero--with-media .mcuenta-avatar {
-  background: rgba(255,255,255,.14);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.28);
-  backdrop-filter: blur(6px);
-}
-.mcuenta-hero--with-media .mcuenta-role {
-  background: rgba(255,255,255,.14);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.22);
-}
-.mcuenta-hero--with-media .mcuenta-uid {
-  background: rgba(255,255,255,.10);
-  color: rgba(255,255,255,.85);
-  border: 1px solid rgba(255,255,255,.18);
-}
-.mcuenta-hero--with-media .mcuenta-tab {
-  color: rgba(255,255,255,.7);
-}
-.mcuenta-hero--with-media .mcuenta-tab.active {
-  color: #fff;
-  border-bottom-color: #fff;
 }
 
 /* Performance: reducir animaciones si el usuario lo prefiere */

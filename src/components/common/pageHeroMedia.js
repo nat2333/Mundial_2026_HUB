@@ -97,13 +97,6 @@ export const HERO_MEDIA = {
     position: 'center 35%',
     intensity: 'default',
   },
-  micuenta: {
-    type: 'image',
-    src: HERO_IMAGES.iniesta,
-    fallback: HERO_IMAGES.zidane,
-    position: 'center 20%',
-    intensity: 'strong',
-  },
 };
 
 export const getHeroMedia = (key) => HERO_MEDIA[key] || null;
