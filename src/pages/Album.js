@@ -642,6 +642,7 @@ const Album = () => {
           { num: repetidas.length  || '0',           lbl: 'Repetidas'            },
           { num: intercambios.length || '0',         lbl: 'Intercambios'         },
         ]}
+        mediaKey="album"
       />
 
       <main className="section">

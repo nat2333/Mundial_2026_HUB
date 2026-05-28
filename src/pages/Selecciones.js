@@ -433,6 +433,7 @@ const Selecciones = () => {
           { num: '2026', lbl: 'Año'          },
         ]}
         variant="selecciones"
+        mediaKey="selecciones"
       />
 
       {/* ── Main body ── */}

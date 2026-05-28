@@ -11,6 +11,8 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Icon from '../components/ui/Icon';
 import TeamFlag from '../components/TeamFlag';
+import HeroMedia from '../components/common/HeroMedia';
+import { getHeroMedia } from '../components/common/pageHeroMedia';
 import useDarkMode from '../hooks/useDarkMode';
 import { useToast } from '../context/ToastContext';
 
@@ -534,7 +536,8 @@ const MiCuenta = () => {
       />
 
       {/* ── Hero perfil ── */}
-      <div className="mcuenta-hero">
+      <div className="mcuenta-hero mcuenta-hero--with-media">
+        <HeroMedia media={getHeroMedia('micuenta')} intensity="strong" />
         <div className="container">
           <div className="mcuenta-hero-inner">
             <div className="mcuenta-avatar">{userInitials}</div>

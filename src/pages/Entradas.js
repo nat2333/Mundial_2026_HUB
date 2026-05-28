@@ -1350,6 +1350,7 @@ const Entradas = () => {
         subtitle="Reserva tu lugar y vive la emoción desde el estadio. Pago seguro, factura instantánea."
         stats={statsHero}
         variant="entradas"
+        mediaKey="entradas"
       />
 
       {/* ── Tab navigation ─────────────────────────────────────────── */}

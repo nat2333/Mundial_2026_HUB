@@ -9,6 +9,9 @@ import Icon from '../components/ui/Icon';
 import MatchModal from '../components/ui/MatchModal';
 import LoginModal from '../components/auth/LoginModal';
 import RegisterModal from '../components/auth/RegisterModal';
+import HeroMedia from '../components/common/HeroMedia';
+import LegendsShowcase from '../components/common/LegendsShowcase';
+import { getHeroMedia } from '../components/common/pageHeroMedia';
 import useAuth from '../hooks/useAuth';
 import useDarkMode from '../hooks/useDarkMode';
 import { teamIso2 } from '../utils/countries';
@@ -233,6 +236,7 @@ const Hero = ({ liveMatch, nextMatch }) => {
     return (
       <section className="hero-epic">
         <div className="hero-bg"></div>
+        <HeroMedia media={getHeroMedia('inicio')} intensity="default" />
         <div className="hero-countdown">
             <div className="hero-epic-eyebrow">
               <span className="hero-epic-chip">
@@ -279,6 +283,7 @@ const Hero = ({ liveMatch, nextMatch }) => {
 
   return (
     <section className="hero-epic">
+      <HeroMedia media={getHeroMedia('inicio')} intensity="strong" />
       <div className="hero-card">
         <div className="hero-bg"></div>
         <div className="hero-left">
@@ -797,6 +802,8 @@ const Inicio = () => {
           </div>
         </section>
       )}
+
+      <LegendsShowcase />
 
       <section className="section container" id="grupos">
         <div className="section-head">

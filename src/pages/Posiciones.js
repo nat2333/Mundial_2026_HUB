@@ -403,6 +403,7 @@ const Posiciones = () => {
           { num: '2026',                               lbl: 'Año'     },
         ]}
         variant="posiciones"
+        mediaKey="posiciones"
       />
 
       {/* ── Tabs ── */}

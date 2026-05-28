@@ -353,7 +353,8 @@ const Sedes = () => {
           { num: '2',  lbl: '🇨🇦 Canadá' },
           { num: '16', lbl: 'Estadios' },
         ]}
-        variant="sedes" // o el variant que corresponda para sedes
+        variant="sedes"
+        mediaKey="sedes"
       />
 
       {/* ── Controls ─────────────────────────────────────────── */}

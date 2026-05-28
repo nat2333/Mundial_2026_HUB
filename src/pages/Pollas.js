@@ -712,6 +712,7 @@ const Pollas = () => {
         subtitle="Compite con tus amigos, predice los resultados y sube al ranking. El que más acierta, gana."
         stats={statsHero}
         variant="pollas"
+        mediaKey="pollas"
       />
 
       {/* ── Action bar: Join inline + Create ──────────────────────── */}

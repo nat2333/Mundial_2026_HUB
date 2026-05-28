@@ -598,6 +598,7 @@ const Calendario = () => {
           { num: '48',  lbl: 'Equipos'  },
         ]}
         variant="calendario"
+        mediaKey="calendario"
       />
 
       {/* ── Main layout ── */}
